@@ -68,7 +68,16 @@
       --len;
 
       el = inviewElements[len];
-      rect = el.element.getBoundingClientRect();
+      try {
+        rect = el.element.getBoundingClientRect();
+      } catch (e) {
+        rect = {
+          top: 0,
+          left: 0
+        };
+      }
+
+      if(typeof rect.height === 'undefined') rect.height = el.offsetHeight;
 
       // In
       if (!el.visible && rect.top - el.offsetIn < viewport && rect.top >= -(rect.height + el.offsetIn)) {
